@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator</title>
+</head>
+<body>
+  <h2>Home Grocery Icon Generator</h2>
+  <canvas id="canvas"></canvas>
+  <br><br>
+  <button onclick="generateIcons()">Generate All Icons</button>
+  
+  <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    
+    function generateIcon(size) {
+      const canvas = document.getElementById('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      // Purple gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#9333ea');
+      gradient.addColorStop(1, '#7c3aed');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Shopping cart icon
+      ctx.strokeStyle = 'white';
+      ctx.fillStyle = 'white';
+      ctx.lineWidth = size * 0.04;
+      
+      const scale = size / 100;
+      
+      // Cart body
+      ctx.beginPath();
+      ctx.moveTo(20 * scale, 30 * scale);
+      ctx.lineTo(25 * scale, 30 * scale);
+      ctx.lineTo(35 * scale, 70 * scale);
+      ctx.lineTo(75 * scale, 70 * scale);
+      ctx.lineTo(80 * scale, 50 * scale);
+      ctx.lineTo(30 * scale, 50 * scale);
+      ctx.stroke();
+      
+      // Cart wheels
+      ctx.beginPath();
+      ctx.arc(40 * scale, 80 * scale, 5 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(70 * scale, 80 * scale, 5 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Download link
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `icon-${size}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+    
+    function generateIcons() {
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index < sizes.length) {
+          generateIcon(sizes[index]);
+          index++;
+        } else {
+          clearInterval(interval);
+          alert('All icons generated!');
+        }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
