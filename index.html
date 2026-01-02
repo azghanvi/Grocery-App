@@ -17,7 +17,6 @@
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!--script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.13/lib.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script-->
   
   <!-- React and ReactDOM -->
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
@@ -122,6 +121,12 @@
       </svg>
     );
 
+    const Minus = ({ size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    );
+
     const Edit2 = ({ size = 24, className = "" }) => (
       <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
@@ -151,41 +156,177 @@
       </svg>
     );
 
+    const ChevronDown = ({ size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    );
+
     const UNITS = ['Item', 'Kg', 'Gram', 'Carton'];
+    const CATEGORIES = ['Dairy', 'Bakery', 'Vegetables', 'Fruits', 'Grains', 'Meat & Poultry', 'Other'];
 
     // Test data
     const initialItems = [
-      { id: 1, name: 'Milk', unit: 'Kg', quantity: 2, checked: false },
-      { id: 2, name: 'Bread', unit: 'Item', quantity: 3, checked: false },
-      { id: 3, name: 'Tomatoes', unit: 'Gram', quantity: 500, checked: false },
-      { id: 4, name: 'Eggs', unit: 'Carton', quantity: 1, checked: false },
-      { id: 5, name: 'Rice', unit: 'Kg', quantity: 5, checked: false },
-      { id: 6, name: 'Chicken', unit: 'Kg', quantity: 1.5, checked: false },
-      { id: 7, name: 'Yogurt', unit: 'Item', quantity: 4, checked: false },
-      { id: 8, name: 'Apples', unit: 'Kg', quantity: 2, checked: false },
-    ];
+    { "id": 1, "name": "Wipes", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 2, "name": "Bleach - red", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 3, "name": "Bleach - yellow", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 4, "name": "Finyle - Liquid Big", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 5, "name": "Mosquito Liquid", "unit": "Item", "quantity": 3, "checked": false, "category": "Non Food" },
+    { "id": 6, "name": "Mosquito Lotion", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 7, "name": "Rubber bands 50rs", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 8, "name": "Shopper 18x24 Pack", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 9, "name": "Tooth Paste Medicam Gel", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 10, "name": "Teeth Brush Soft", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 11, "name": "Teeth Brush - small", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 12, "name": "Soap capri (medium)", "unit": "Item", "quantity": 4, "checked": false, "category": "Non Food" },
+    { "id": 13, "name": "Shampoo (Pantene 1L)", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 14, "name": "Nair Cream Big", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 15, "name": "Babycare Oil Small", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 16, "name": "Hair Oil", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 17, "name": "Neel Big", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 18, "name": "Suraj Washing Powder", "unit": "Kg", "quantity": 5, "checked": false, "category": "Non Food" },
+    { "id": 19, "name": "Sufi Sabun", "unit": "Item", "quantity": 4, "checked": false, "category": "Non Food" },
+    { "id": 20, "name": "Sufi Maxbar", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 21, "name": "Scotch Brite (foam)", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 22, "name": "Scotch Brite (Tar)", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 23, "name": "Vim powder medium", "unit": "Item", "quantity": 1, "checked": false, "category": "Non Food" },
+    { "id": 24, "name": "Matchbox (box)", "unit": "Item", "quantity": 2, "checked": false, "category": "Non Food" },
+    { "id": 25, "name": "Tez Path", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 26, "name": "Til", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 27, "name": "Kali Mirch (powder)", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 28, "name": "Mix sabut Garam Masala", "unit": "Gram", "quantity": 200, "checked": false, "category": "Dry Food" },
+    { "id": 29, "name": "Khanay soda", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 30, "name": "Khopra", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 31, "name": "Kishmish", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 32, "name": "Khash-khash", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 33, "name": "Tukhmira", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 34, "name": "Lalmirch (powder)", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 35, "name": "Lalmirch (sabut)", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 36, "name": "Rai", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 37, "name": "Pista", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 38, "name": "Suji", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 39, "name": "Badam", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 40, "name": "Methi Dana", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 41, "name": "Dhania powder", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 42, "name": "Sagudana", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 43, "name": "Salt Pink (national)", "unit": "Item", "quantity": 1, "checked": false, "category": "Dry Food" },
+    { "id": 44, "name": "Chanay (bhunay) Pack", "unit": "Item", "quantity": 1, "checked": false, "category": "Dry Food" },
+    { "id": 45, "name": "Ilaichi - small", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 46, "name": "Imli", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 47, "name": "Zarda color", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 48, "name": "Zira (sabut)", "unit": "Gram", "quantity": 100, "checked": false, "category": "Dry Food" },
+    { "id": 49, "name": "Sonf", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 50, "name": "Dal Arhar", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 51, "name": "Dal Chana", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 52, "name": "Dal Malka Masoor", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 53, "name": "Dal Mash", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 54, "name": "Dal Masoor", "unit": "Kg", "quantity": 1, "checked": false, "category": "Dry Food" },
+    { "id": 55, "name": "Dal Mong", "unit": "Kg", "quantity": 1, "checked": false, "category": "Dry Food" },
+    { "id": 56, "name": "Dalya", "unit": "Kg", "quantity": 1, "checked": false, "category": "Dry Food" },
+    { "id": 57, "name": "Kabli Chanay", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "Dry Food" },
+    { "id": 58, "name": "Kalongi", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 59, "name": "Haldi", "unit": "Gram", "quantity": 50, "checked": false, "category": "Dry Food" },
+    { "id": 60, "name": "Mayonese", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 61, "name": "Ketchup", "unit": "Kg", "quantity": 5, "checked": false, "category": "General" },
+    { "id": 62, "name": "Vineger (mid bottle)", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 63, "name": "Soya Sauce", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 64, "name": "Chai Tapal Mixture", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "General" },
+    { "id": 65, "name": "Kheer packet", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 66, "name": "Macroni", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 67, "name": "Siwaiyan", "unit": "Item", "quantity": 2, "checked": false, "category": "General" },
+    { "id": 68, "name": "Spegetti", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 69, "name": "Pudding", "unit": "Item", "quantity": 2, "checked": false, "category": "General" },
+    { "id": 70, "name": "Custard Vanila", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 71, "name": "Achar big", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 72, "name": "Jam mango (mitchels)", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 73, "name": "Jelly", "unit": "Item", "quantity": 2, "checked": false, "category": "General" },
+    { "id": 74, "name": "Corn Flour", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "General" },
+    { "id": 75, "name": "Baking powder box", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 76, "name": "Coco powder big box", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 77, "name": "Milk Carton", "unit": "L", "quantity": 12, "checked": false, "category": "General" },
+    { "id": 78, "name": "Roh Afza", "unit": "Kg", "quantity": 5, "checked": false, "category": "General" },
+    { "id": 79, "name": "Oil (carton)", "unit": "Kg", "quantity": 6, "checked": false, "category": "General" },
+    { "id": 80, "name": "Rice Basmati", "unit": "Kg", "quantity": 4, "checked": false, "category": "General" },
+    { "id": 81, "name": "Rice tota", "unit": "Kg", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 82, "name": "Sugar", "unit": "Kg", "quantity": 5, "checked": false, "category": "General" },
+    { "id": 83, "name": "Aata", "unit": "Kg", "quantity": 20, "checked": false, "category": "General" },
+    { "id": 84, "name": "Maida", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "General" },
+    { "id": 85, "name": "Besan", "unit": "Kg", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 86, "name": "Kewara (mid bottle)", "unit": "Item", "quantity": 1, "checked": false, "category": "General" },
+    { "id": 87, "name": "Kala Namak", "unit": "Gram", "quantity": 50, "checked": false, "category": "General" },
+    { "id": 88, "name": "Roll patti", "unit": "Kg", "quantity": 0.5, "checked": false, "category": "General" },
+    { "id": 89, "name": "Nihari Masala (sache)", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 90, "name": "Qorma masala", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 91, "name": "Dal masala", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 92, "name": "Achar gosht Masala (sache)", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 93, "name": "Biryani masala", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 94, "name": "Chat masala (shan)", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 95, "name": "Chicken karhai masala", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 96, "name": "Haleem Mix Pack", "unit": "Item", "quantity": 1, "checked": false, "category": "Masala" },
+    { "id": 97, "name": "Qima", "unit": "Kg", "quantity": 2, "checked": false, "category": "Meat" },
+    { "id": 98, "name": "Boneless", "unit": "Kg", "quantity": 2, "checked": false, "category": "Meat" },
+    { "id": 99, "name": "Bone", "unit": "Kg", "quantity": 2, "checked": false, "category": "Meat" },
+    { "id": 100, "name": "Fish", "unit": "Kg", "quantity": 2, "checked": false, "category": "Meat" },
+    { "id": 101, "name": "Chicken", "unit": "Item", "quantity": 1, "checked": false, "category": "Meat" }
+  ];
 
     function App() {
       const [items, setItems] = useState(initialItems);
       const [searchQuery, setSearchQuery] = useState('');
       const [showModal, setShowModal] = useState(false);
       const [modalMode, setModalMode] = useState('add');
-      const [currentItem, setCurrentItem] = useState({ id: null, name: '', unit: 'Item', quantity: '' });
+      const [currentItem, setCurrentItem] = useState({ id: null, name: '', unit: 'Item', quantity: '', category: 'Other' });
       const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+      const [collapsedCategories, setCollapsedCategories] = useState({});
 
       const filteredItems = items.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-      const handleCheckbox = (id) => {
+      // Group items by category
+      const groupedItems = filteredItems.reduce((acc, item) => {
+        const category = item.category || 'Other';
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(item);
+        return acc;
+      }, {});
+
+      const toggleCategory = (category) => {
+        setCollapsedCategories(prev => ({
+          ...prev,
+          [category]: !prev[category]
+        }));
+      };
+
+      const handleCheckbox = (id, e) => {
+        e.stopPropagation();
         setItems(items.map(item =>
           item.id === id ? { ...item, checked: !item.checked } : item
         ));
       };
 
+      const handleRowClick = (id) => {
+        setItems(items.map(item =>
+          item.id === id ? { ...item, checked: !item.checked } : item
+        ));
+      };
+
+      const handleQuantityChange = (id, delta, e) => {
+        e.stopPropagation();
+        setItems(items.map(item => {
+          if (item.id === id) {
+            const newQuantity = Math.max(0, parseFloat(item.quantity) + delta);
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        }));
+      };
+
       const handleAdd = () => {
         setModalMode('add');
-        setCurrentItem({ id: null, name: '', unit: 'Item', quantity: '' });
+        setCurrentItem({ id: null, name: '', unit: 'Item', quantity: '', category: 'Other' });
         setShowModal(true);
       };
 
@@ -275,25 +416,66 @@
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-2">
-            {filteredItems.map(item => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg shadow-md p-4 flex items-center gap-3 hover:shadow-lg transition-shadow"
-              >
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => handleCheckbox(item.id)}
-                  className="w-5 h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
-                />
-                <div className="flex-1 font-medium text-gray-800">{item.name}</div>
-                <div className="text-sm text-gray-600 bg-purple-100 px-3 py-1 rounded-full">
-                  {item.unit}
-                </div>
-                <div className="text-sm font-semibold text-gray-800 bg-blue-100 px-3 py-1 rounded-full">
-                  {item.quantity}
-                </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {Object.entries(groupedItems).map(([category, categoryItems]) => (
+              <div key={category} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <button
+                  onClick={() => toggleCategory(category)}
+                  className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200 transition-colors"
+                >
+                  <span className="font-bold text-gray-800">{category}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-600 bg-white px-2 py-1 rounded-full">
+                      {categoryItems.length}
+                    </span>
+                    <ChevronDown 
+                      size={20} 
+                      className={`transition-transform ${collapsedCategories[category] ? '-rotate-90' : ''}`}
+                    />
+                  </div>
+                </button>
+                
+                {!collapsedCategories[category] && (
+                  <div className="divide-y divide-gray-100">
+                    {categoryItems.map(item => (
+                      <div
+                        key={item.id}
+                        onClick={() => handleRowClick(item.id)}
+                        className={`p-4 flex items-center gap-3 hover:bg-purple-50 transition-colors cursor-pointer ${
+                          item.checked ? 'bg-purple-50' : ''
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={item.checked}
+                          onChange={(e) => handleCheckbox(item.id, e)}
+                          className="w-5 h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
+                        />
+                        <div className="flex-1 font-medium text-gray-800">{item.name}</div>
+                        <div className="text-sm text-gray-600 bg-purple-100 px-3 py-1 rounded-full">
+                          {item.unit}
+                        </div>
+                        <div className="flex items-center gap-1 bg-blue-100 rounded-full">
+                          <button
+                            onClick={(e) => handleQuantityChange(item.id, -0.5, e)}
+                            className="p-1 hover:bg-blue-200 rounded-full transition-colors"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="text-sm font-semibold text-gray-800 px-2 min-w-[40px] text-center">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={(e) => handleQuantityChange(item.id, 0.5, e)}
+                            className="p-1 hover:bg-blue-200 rounded-full transition-colors"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -351,6 +533,19 @@
                       className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
                       placeholder="Enter item name"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select
+                      value={currentItem.category}
+                      onChange={(e) => setCurrentItem({ ...currentItem, category: e.target.value })}
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
+                    >
+                      {CATEGORIES.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
@@ -467,19 +662,5 @@
       });
     }
   </script>
-  
-<!--script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/grocery/service-worker.js')
-      .then(registration => {
-        // Registration successful, scope is the full path where sw.js is located
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }).catch(err => {
-        console.log('ServiceWorker registration failed: ', err);
-      });
-  });
-}
-</script-->
 </body>
 </html>
